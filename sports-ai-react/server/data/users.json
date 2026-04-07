@@ -1,0 +1,14 @@
+[
+  {
+    "id": "b46795e1-ab37-4746-adcd-5da538222c1d",
+    "email": "1429182363@qq.com",
+    "passwordHash": "$2b$10$Jo0VZWYBwb52WKHDuxnQRepn.IEVE3HWgit5SxdOKm1J/ewZnLB.u",
+    "createdAt": "2026-04-07T13:27:52.465Z"
+  },
+  {
+    "id": "61e6c4d9-e5a9-4ef6-804c-b24a9910fbff",
+    "email": "2805135148@qq.com",
+    "passwordHash": "$2b$10$qg699Aj5mLLoiG08B.MtZ.YjekQud4xe3HJe1qBG3CwTYljlk0x9O",
+    "createdAt": "2026-04-07T13:36:04.353Z"
+  }
+]

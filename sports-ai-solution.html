@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>体育加AI - 为全球体育产业提供智能解决方案</title>
+    <meta name="description" content="体育加AI为全球体育产业提供专属解决方案，从训练到赛事，从管理到营销，赋能体育全链路，助力解决训练效率、赛事分析、球迷互动、商业变现等问题，提高体育产业竞争力和吸引力。">
+    <link rel="icon" type="image/x-ico" href="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20AI%20logo%20modern%20minimalist&image_size=square">
+    <style>
+        :root{--primary:#0032FF;--secondary:#00A6FF;--accent:#FF4590;--dark:#222222;--light:#ffffff;--gray:#f5f5f5;--text:#333333;--text-light:#666666}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:system-ui,-apple-system,"Segoe UI","Roboto","Ubuntu","Cantarell","Noto Sans",sans-serif;line-height:1.6;color:var(--text);background-color:var(--light)}
+        .container{max-width:1360px;margin:0 auto;padding:0 20px}
+        header{background-color:var(--light);padding:20px 0;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000}
+        .header-container{display:flex;justify-content:space-between;align-items:center}
+        .logo{font-size:24px;font-weight:700;color:var(--primary);text-decoration:none;display:flex;align-items:center}
+        .logo svg{margin-right:10px}
+        nav ul{display:flex;list-style:none}
+        nav ul li{margin-left:30px}
+        nav ul li a{text-decoration:none;color:var(--text);font-weight:500;transition:color .3s ease}
+        nav ul li a:hover{color:var(--primary)}
+        .hero{background:linear-gradient(135deg,rgba(0,50,255,.9) 0%,rgba(0,166,255,.9) 100%),url('https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20ai%20technology%20futuristic%20background&image_size=landscape_16_9');background-size:cover;background-position:center;background-repeat:no-repeat;color:var(--light);padding:100px 0;text-align:center}
+        .hero h1{font-size:48px;font-weight:700;margin-bottom:20px}
+        .hero p{font-size:20px;margin-bottom:40px;max-width:800px;margin-left:auto;margin-right:auto}
+        .btn{display:inline-block;padding:15px 30px;background-color:var(--light);color:var(--primary);border:none;border-radius:50px;font-size:16px;font-weight:700;text-decoration:none;transition:all .3s ease}
+        .btn:hover{background-color:var(--gray);transform:translateY(-2px)}
+        .solutions{padding:100px 0;background-color:var(--gray)}
+        .section-title{text-align:center;margin-bottom:60px}
+        .section-title h2{font-size:36px;font-weight:700;margin-bottom:20px;color:var(--dark)}
+        .section-title p{font-size:18px;color:var(--text-light);max-width:800px;margin:0 auto}
+        .solution-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:60px}
+        .solution-card{background-color:var(--light);border-radius:10px;padding:40px;box-shadow:0 5px 20px rgba(0,0,0,.1);transition:transform .3s ease}
+        .solution-card:hover{transform:translateY(-5px)}
+        .solution-card .icon{width:60px;height:60px;background-color:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+        .solution-card .icon svg{width:30px;height:30px;fill:var(--light)}
+        .solution-card h3{font-size:24px;font-weight:700;margin-bottom:20px;color:var(--primary)}
+        .solution-card p{margin-bottom:20px;color:var(--text-light)}
+        .solution-card ul{list-style:none}
+        .solution-card ul li{margin-bottom:10px;padding-left:25px;position:relative}
+        .solution-card ul li:before{content:"✓";position:absolute;left:0;color:var(--secondary);font-weight:700}
+        .video-section{padding:100px 0;background-color:var(--light)}
+        .video-container{display:flex;align-items:center;gap:50px;flex-wrap:wrap}
+        .video-content{flex:1;min-width:300px}
+        .video-content h2{font-size:32px;font-weight:700;margin-bottom:20px;color:var(--dark)}
+        .video-content p{font-size:18px;margin-bottom:30px;color:var(--text-light)}
+        .video-embed{flex:1;min-width:300px;position:relative;padding-bottom:56.25%;height:0}
+        .video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:10px}
+        footer{background-color:var(--dark);color:var(--light);padding:60px 0}
+        .footer-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px}
+        .footer-column h3{font-size:20px;font-weight:700;margin-bottom:20px}
+        .footer-column p{margin-bottom:15px;color:#ccc}
+        .footer-column ul{list-style:none}
+        .footer-column ul li{margin-bottom:10px}
+        .footer-column ul li a{color:#ccc;text-decoration:none;transition:color .3s ease}
+        .footer-column ul li a:hover{color:var(--light)}
+        .footer-bottom{border-top:1px solid #444;margin-top:40px;padding-top:20px;text-align:center;color:#ccc}
+        @media (max-width:768px){.hero h1{font-size:36px}.hero p{font-size:18px}.section-title h2{font-size:28px}.video-container{flex-direction:column;text-align:center}.header-container{flex-direction:column;gap:20px}.nav ul{flex-wrap:wrap;justify-content:center}.nav ul li{margin:0 15px}}
+    </style>
+    <script>
+        // 懒加载图片
+        document.addEventListener('DOMContentLoaded', function() {
+            const lazyImages = document.querySelectorAll('img[data-src]');
+            
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            const image = entry.target;
+                            image.src = image.dataset.src;
+                            image.classList.remove('lazy');
+                            imageObserver.unobserve(image);
+                        }
+                    });
+                });
+                
+                lazyImages.forEach(function(image) {
+                    imageObserver.observe(image);
+                });
+            }
+        });
+    </script>
+    <!-- 已迁移到 React 工程（sports-ai-react/）；此处旧模块引用已移除 -->
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-container">
+            <a href="#" data-route="home" class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 40C31.0457 40 40 31.0457 40 20C40 8.95431 31.0457 0 20 0C8.95431 0 0 8.95431 0 20C0 31.0457 8.95431 40 20 40Z" fill="#0032FF"/>
+                    <path d="M12 18L18 24L12 30V18Z" fill="white"/>
+                    <path d="M28 18L22 24L28 30V18Z" fill="white"/>
+                </svg>
+                体育加AI
+            </a>
+            <nav data-site-nav></nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>体育加AI - 智能赋能体育产业</h1>
+            <p>为全球体育产业提供专属解决方案，从训练到赛事，从管理到营销，赋能体育全链路，助力解决训练效率、赛事分析、球迷互动、商业变现等问题，提高体育产业竞争力和吸引力。</p>
+            <a href="#" data-route="solutions" class="btn">了解解决方案</a>
+        </div>
+    </section>
+
+    <!-- 解决方案部分 -->
+    <section class="solutions" id="solutions">
+        <div class="container">
+            <div class="section-title">
+                <h2>智能解决方案</h2>
+                <p>基于人工智能技术，为体育产业提供全方位的智能解决方案，助力体育产业数字化转型</p>
+            </div>
+            <div class="solution-grid">
+                <div class="solution-card">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                    </div>
+                    <h3>智能训练系统</h3>
+                    <p>利用AI技术分析运动员训练数据，提供个性化训练方案，优化训练效果，减少运动损伤。</p>
+                    <ul>
+                        <li>实时数据分析与反馈</li>
+                        <li>个性化训练计划制定</li>
+                        <li>运动损伤风险预测</li>
+                        <li>训练效果评估与优化</li>
+                    </ul>
+                </div>
+                <div class="solution-card">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M3.5 18.49L6.64 15.36L5.25 13.97L2 17.22L3.5 18.49M10.75 2C10.34 2 10 2.16 9.69 2.47L2.77 9.38C2.33 9.82 2.33 10.55 2.77 11C3.2 11.45 3.93 11.45 4.37 11L10.65 4.72C11.06 4.31 11.79 4.31 12.2 4.72L19.63 12.15C20.04 12.56 20.04 13.29 19.63 13.7L12.2 21.12C11.79 21.53 11.06 21.53 10.65 21.12L3.22 13.69C2.81 13.28 2.81 12.55 3.22 12.14L9.69 5.67C10 5.36 10.34 5.2 10.75 5.2V2Z"/>
+                        </svg>
+                    </div>
+                    <h3>赛事分析平台</h3>
+                    <p>通过AI技术对赛事数据进行深度分析，为教练和球队提供战术建议，提高比赛胜率。</p>
+                    <ul>
+                        <li>实时赛事数据采集与分析</li>
+                        <li>对手战术分析与预测</li>
+                        <li>球员表现评估与对比</li>
+                        <li>战术建议与优化</li>
+                    </ul>
+                </div>
+                <div class="solution-card">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M10 20V14H14V20H19V12H22L12 3L2 12H5V20H10Z"/>
+                        </svg>
+                    </div>
+                    <h3>智能场馆管理</h3>
+                    <p>利用AI技术优化场馆运营管理，提高场馆利用率，提升观众体验。</p>
+                    <ul>
+                        <li>智能票务管理与分析</li>
+                        <li>场馆资源优化配置</li>
+                        <li>观众行为分析与个性化服务</li>
+                        <li>安防监控与应急响应</li>
+                    </ul>
+                </div>
+                <div class="solution-card">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M11.99 2C6.47 2 2 6.48 2 12C2 17.52 6.47 22 11.99 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 11.99 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z"/>
+                        </svg>
+                    </div>
+                    <h3>数字营销解决方案</h3>
+                    <p>基于AI技术的精准营销系统，帮助体育品牌和赛事提升品牌影响力和商业价值。</p>
+                    <ul>
+                        <li>粉丝画像分析与精准营销</li>
+                        <li>社交媒体内容智能生成</li>
+                        <li>商业赞助效果评估</li>
+                        <li>数字内容变现优化</li>
+                    </ul>
+                </div>
+                <div class="solution-card">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 18C8.69 18 6 15.31 6 12C6 11.38 6.1 10.79 6.24 10.21L5.92 11.09C5.65 12.37 5.5 13.68 5.5 15C5.5 17.43 7.57 19.5 10 19.5C10.66 19.5 11.29 19.36 11.87 19.1L12 19.11L12.13 19.1C12.71 19.36 13.34 19.5 14 19.5C16.43 19.5 18.5 17.43 18.5 15C18.5 13.68 18.35 12.37 18.08 11.09L17.76 10.21C17.9 10.79 18 11.38 18 12C18 15.31 15.31 18 12 18ZM12 9.5C13.38 9.5 14.5 8.38 14.5 7C14.5 5.62 13.38 4.5 12 4.5C10.62 4.5 9.5 5.62 9.5 7C9.5 8.38 10.62 9.5 12 9.5Z"/>
+                        </svg>
+                    </div>
+                    <h3>智能裁判辅助系统</h3>
+                    <p>利用AI技术辅助裁判判罚，提高比赛公正性和准确性。</p>
+                    <ul>
+                        <li>视频助理裁判(VAR)技术</li>
+                        <li>实时动作识别与分析</li>
+                        <li>判罚辅助决策支持</li>
+                        <li>比赛数据统计与分析</li>
+                    </ul>
+                </div>
+                <div class="solution-card">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M16 11C17.66 11 19 9.66 19 8C19 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 11 9.66 11 8C11 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V19H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V19H23V16.5C23 14.17 18.33 13 16 13Z"/>
+                        </svg>
+                    </div>
+                    <h3>球迷互动平台</h3>
+                    <p>基于AI技术的智能互动平台，提升球迷参与度和体验。</p>
+                    <ul>
+                        <li>个性化内容推荐</li>
+                        <li>虚拟观赛体验</li>
+                        <li>球迷社区智能管理</li>
+                        <li>互动活动策划与执行</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 视频展示部分 -->
+    <section class="video-section">
+        <div class="container">
+            <div class="video-container">
+                <div class="video-content">
+                    <h2>AI如何改变体育产业</h2>
+                    <p>通过先进的人工智能技术，我们正在改变体育产业的各个方面，从训练到赛事，从管理到营销，为体育产业带来前所未有的机遇和挑战。</p>
+                    <a href="#" data-route="homeContact" class="btn">联系我们</a>
+                </div>
+                <div class="video-embed">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>体育加AI</h3>
+                <p>为全球体育产业提供智能解决方案，助力体育产业数字化转型。</p>
+                <p>邮箱：contact@sportsai.com</p>
+                <p>电话：400-123-4567</p>
+            </div>
+            <div class="footer-column">
+                <h3>解决方案</h3>
+                <ul>
+                    <li><a href="#" data-route="solutions">智能训练系统</a></li>
+                    <li><a href="#" data-route="solutions">赛事分析平台</a></li>
+                    <li><a href="#" data-route="solutions">智能场馆管理</a></li>
+                    <li><a href="#" data-route="solutions">数字营销解决方案</a></li>
+                    <li><a href="#" data-route="solutions">智能裁判辅助系统</a></li>
+                    <li><a href="#" data-route="solutions">球迷互动平台</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>关于我们</h3>
+                <ul>
+                    <li><a href="#" data-route="aboutCompany">公司简介</a></li>
+                    <li><a href="#" data-route="about">团队介绍</a></li>
+                    <li><a href="#" data-route="about">合作伙伴</a></li>
+                    <li><a href="#" data-route="about">新闻动态</a></li>
+                    <li><a href="#" data-route="about">加入我们</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>联系我们</h3>
+                <ul>
+                    <li><a href="#" data-route="contact">在线咨询</a></li>
+                    <li><a href="#" data-route="contact">意见反馈</a></li>
+                    <li><a href="#" data-route="contact">服务支持</a></li>
+                    <li><a href="#" data-route="contact">隐私政策</a></li>
+                    <li><a href="#" data-route="contact">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 体育加AI. 保留所有权利.</p>
+        </div>
+    </footer>
+</body>
+</html>

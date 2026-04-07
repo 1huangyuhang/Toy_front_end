@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我们 - 体育加AI</title>
+    <meta name="description" content="体育加AI是一家专注于体育产业数字化转型的科技公司，致力于通过AI技术为体育产业提供智能解决方案。">
+    <link rel="icon" type="image/x-ico" href="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20AI%20logo%20modern%20minimalist&image_size=square">
+    <style>
+        :root{--primary:#0032FF;--secondary:#00A6FF;--accent:#FF4590;--dark:#222222;--light:#ffffff;--gray:#f5f5f5;--text:#333333;--text-light:#666666}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:system-ui,-apple-system,"Segoe UI","Roboto","Ubuntu","Cantarell","Noto Sans",sans-serif;line-height:1.6;color:var(--text);background-color:var(--light)}
+        .container{max-width:1360px;margin:0 auto;padding:0 20px}
+        header{background-color:var(--light);padding:20px 0;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000}
+        .header-container{display:flex;justify-content:space-between;align-items:center}
+        .logo{font-size:24px;font-weight:700;color:var(--primary);text-decoration:none;display:flex;align-items:center}
+        .logo svg{margin-right:10px}
+        nav ul{display:flex;list-style:none}
+        nav ul li{margin-left:30px}
+        nav ul li a{text-decoration:none;color:var(--text);font-weight:500;transition:color .3s ease}
+        nav ul li a:hover{color:var(--primary)}
+        .hero{background:linear-gradient(135deg,rgba(0,50,255,.9) 0%,rgba(0,166,255,.9) 100%),url('https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20ai%20company%20background&image_size=landscape_16_9');background-size:cover;background-position:center;background-repeat:no-repeat;color:var(--light);padding:100px 0;text-align:center}
+        .hero h1{font-size:48px;font-weight:700;margin-bottom:20px}
+        .hero p{font-size:20px;margin-bottom:40px;max-width:800px;margin-left:auto;margin-right:auto}
+        .btn{display:inline-block;padding:15px 30px;background-color:var(--light);color:var(--primary);border:none;border-radius:50px;font-size:16px;font-weight:700;text-decoration:none;transition:all .3s ease}
+        .btn:hover{background-color:var(--gray);transform:translateY(-2px)}
+        .about{padding:100px 0;background-color:var(--light)}
+        .section-title{text-align:center;margin-bottom:60px}
+        .section-title h2{font-size:36px;font-weight:700;margin-bottom:20px;color:var(--dark)}
+        .section-title p{font-size:18px;color:var(--text-light);max-width:800px;margin:0 auto}
+        .about-content{display:flex;align-items:center;gap:50px;flex-wrap:wrap}
+        .about-text{flex:1;min-width:300px}
+        .about-text h3{font-size:24px;font-weight:700;margin-bottom:20px;color:var(--primary)}
+        .about-text p{margin-bottom:20px;color:var(--text-light)}
+        .about-image{flex:1;min-width:300px}
+        .about-image img{width:100%;border-radius:10px}
+        .team{padding:100px 0;background-color:var(--gray)}
+        .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-top:60px}
+        .team-member{background-color:var(--light);border-radius:10px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,.1);text-align:center;padding:30px}
+        .team-member img{width:120px;height:120px;border-radius:50%;object-fit:cover;margin-bottom:20px}
+        .team-member h3{font-size:20px;font-weight:700;margin-bottom:5px;color:var(--primary)}
+        .team-member p{color:var(--text-light);margin-bottom:15px}
+        .team-member .social-links{display:flex;justify-content:center;gap:10px}
+        .team-member .social-links a{color:var(--text-light);transition:color .3s ease}
+        .team-member .social-links a:hover{color:var(--primary)}
+        .partners{padding:100px 0;background-color:var(--light)}
+        .partners-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px;margin-top:60px}
+        .partner-logo{background-color:var(--gray);border-radius:10px;padding:30px;display:flex;align-items:center;justify-content:center;height:150px;transition:transform .3s ease}
+        .partner-logo:hover{transform:scale(1.05)}
+        .partner-logo img{max-width:100%;max-height:100%}
+        .news{padding:100px 0;background-color:var(--gray)}
+        .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;margin-top:60px}
+        .news-card{background-color:var(--light);border-radius:10px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,.1);transition:transform .3s ease}
+        .news-card:hover{transform:translateY(-5px)}
+        .news-image{width:100%;height:200px;overflow:hidden}
+        .news-image img{width:100%;height:100%;object-fit:cover}
+        .news-content{padding:20px}
+        .news-date{font-size:14px;color:var(--text-light);margin-bottom:10px}
+        .news-content h3{font-size:20px;font-weight:700;margin-bottom:10px;color:var(--primary)}
+        .news-content p{margin-bottom:15px;color:var(--text-light)}
+        .news-link{display:inline-block;color:var(--primary);font-weight:500;text-decoration:none;transition:color .3s ease}
+        .news-link:hover{color:var(--secondary)}
+        .careers{padding:100px 0;background-color:var(--light)}
+        .careers-content{max-width:800px;margin:0 auto;text-align:center}
+        .careers-content p{margin-bottom:40px;color:var(--text-light)}
+        footer{background-color:var(--dark);color:var(--light);padding:60px 0}
+        .footer-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px}
+        .footer-column h3{font-size:20px;font-weight:700;margin-bottom:20px}
+        .footer-column p{margin-bottom:15px;color:#ccc}
+        .footer-column ul{list-style:none}
+        .footer-column ul li{margin-bottom:10px}
+        .footer-column ul li a{color:#ccc;text-decoration:none;transition:color .3s ease}
+        .footer-column ul li a:hover{color:var(--light)}
+        .footer-bottom{border-top:1px solid #444;margin-top:40px;padding-top:20px;text-align:center;color:#ccc}
+        @media (max-width:768px){.hero h1{font-size:36px}.hero p{font-size:18px}.section-title h2{font-size:28px}.about-content{flex-direction:column}.header-container{flex-direction:column;gap:20px}.nav ul{flex-wrap:wrap;justify-content:center}.nav ul li{margin:0 15px}}}
+    </style>
+    <script>
+        // 懒加载图片
+        document.addEventListener('DOMContentLoaded', function() {
+            const lazyImages = document.querySelectorAll('img[data-src]');
+            
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            const image = entry.target;
+                            image.src = image.dataset.src;
+                            image.classList.remove('lazy');
+                            imageObserver.unobserve(image);
+                        }
+                    });
+                });
+                
+                lazyImages.forEach(function(image) {
+                    imageObserver.observe(image);
+                });
+            }
+        });
+    </script>
+    <!-- 已迁移到 React 工程（sports-ai-react/）；此处旧模块引用已移除 -->
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-container">
+            <a href="#" data-route="home" class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 40C31.0457 40 40 31.0457 40 20C40 8.95431 31.0457 0 20 0C8.95431 0 0 8.95431 0 20C0 31.0457 8.95431 40 20 40Z" fill="#0032FF"/>
+                    <path d="M12 18L18 24L12 30V18Z" fill="white"/>
+                    <path d="M28 18L22 24L28 30V18Z" fill="white"/>
+                </svg>
+                体育加AI
+            </a>
+            <nav data-site-nav></nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="container">
+            <h1>关于我们</h1>
+            <p>体育加AI是一家专注于体育产业数字化转型的科技公司，致力于通过AI技术为体育产业提供智能解决方案</p>
+            <a href="#about" class="btn">了解更多</a>
+        </div>
+    </section>
+
+    <!-- 公司简介 -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>公司简介</h2>
+                <p>体育加AI成立于2020年，是一家专注于体育产业数字化转型的科技公司</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>我们的使命</h3>
+                    <p>通过人工智能技术，赋能体育产业，推动体育产业数字化转型，为全球体育产业提供智能解决方案，助力体育产业实现可持续发展。</p>
+                    <h3>我们的愿景</h3>
+                    <p>成为全球领先的体育产业AI解决方案提供商，通过技术创新，为体育产业创造更大的价值。</p>
+                    <h3>核心价值观</h3>
+                    <p>创新、专业、合作、共赢。我们相信通过技术创新和专业服务，可以为客户创造更大的价值，实现互利共赢。</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20ai%20company%20office%20modern&image_size=landscape_4_3" alt="公司办公环境">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队介绍 -->
+    <section class="team">
+        <div class="container">
+            <div class="section-title">
+                <h2>我们的团队</h2>
+                <p>我们拥有一支由AI专家、体育行业专家和技术开发人员组成的专业团队</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20businessman%20headshot&image_size=square" alt="CEO">
+                    <h3>张明</h3>
+                    <p>创始人 & CEO</p>
+                    <p>前Google AI研究员，拥有10年AI领域经验</p>
+                    <div class="social-links">
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 9h4v12H2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 9h4v12H2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20businesswoman%20headshot&image_size=square" alt="CTO">
+                    <h3>李婷</h3>
+                    <p>CTO</p>
+                    <p>前Microsoft技术总监，拥有15年软件架构经验</p>
+                    <div class="social-links">
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 9h4v12H2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 9h4v12H2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20sports%20expert%20headshot&image_size=square" alt="体育总监">
+                    <h3>王强</h3>
+                    <p>体育总监</p>
+                    <p>前国家足球队队员，拥有20年体育行业经验</p>
+                    <div class="social-links">
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 9h4v12H2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 9h4v12H2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20marketing%20expert%20headshot&image_size=square" alt="市场总监">
+                    <h3>赵娜</h3>
+                    <p>市场总监</p>
+                    <p>前Nike市场经理，拥有10年体育营销经验</p>
+                    <div class="social-links">
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 9h4v12H2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 9h4v12H2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 合作伙伴 -->
+    <section class="partners">
+        <div class="container">
+            <div class="section-title">
+                <h2>合作伙伴</h2>
+                <p>我们与全球知名体育品牌、俱乐部和机构建立了长期合作关系</p>
+            </div>
+            <div class="partners-grid">
+                <div class="partner-logo">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20brand%20logo%201&image_size=square" alt="合作伙伴1">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20brand%20logo%202&image_size=square" alt="合作伙伴2">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20brand%20logo%203&image_size=square" alt="合作伙伴3">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20brand%20logo%204&image_size=square" alt="合作伙伴4">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20brand%20logo%205&image_size=square" alt="合作伙伴5">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20brand%20logo%206&image_size=square" alt="合作伙伴6">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新闻动态 -->
+    <section class="news">
+        <div class="container">
+            <div class="section-title">
+                <h2>新闻动态</h2>
+                <p>了解体育加AI的最新动态和行业资讯</p>
+            </div>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20ai%20news%201&image_size=landscape_4_3" alt="新闻1">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">2026年3月15日</div>
+                        <h3>体育加AI获得A轮融资1000万美元</h3>
+                        <p>体育加AI宣布获得由XYZ资本领投的A轮融资1000万美元，将用于加速产品研发和市场拓展。</p>
+                        <a href="#" class="news-link">阅读更多 →</a>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20ai%20news%202&image_size=landscape_4_3" alt="新闻2">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">2026年2月10日</div>
+                        <h3>体育加AI与英超俱乐部达成战略合作</h3>
+                        <p>体育加AI与某英超俱乐部达成战略合作，为其提供智能训练系统和赛事分析平台。</p>
+                        <a href="#" class="news-link">阅读更多 →</a>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20ai%20news%203&image_size=landscape_4_3" alt="新闻3">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">2026年1月5日</div>
+                        <h3>体育加AI发布智能裁判辅助系统2.0</h3>
+                        <p>体育加AI发布智能裁判辅助系统2.0版本，新增实时动作识别和判罚辅助决策功能。</p>
+                        <a href="#" class="news-link">阅读更多 →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 加入我们 -->
+    <section class="careers">
+        <div class="container">
+            <div class="section-title">
+                <h2>加入我们</h2>
+                <p>我们欢迎有才华、有激情的人才加入体育加AI团队</p>
+            </div>
+            <div class="careers-content">
+                <p>体育加AI正在快速发展，我们寻找志同道合的伙伴一起推动体育产业数字化转型。无论你是AI专家、体育行业专家还是技术开发人员，我们都欢迎你的加入。</p>
+                <a href="#" data-route="contact" class="btn">联系我们</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>体育加AI</h3>
+                <p>为全球体育产业提供智能解决方案，助力体育产业数字化转型。</p>
+                <p>邮箱：contact@sportsai.com</p>
+                <p>电话：400-123-4567</p>
+            </div>
+            <div class="footer-column">
+                <h3>解决方案</h3>
+                <ul>
+                    <li><a href="#" data-route="solutions">智能训练系统</a></li>
+                    <li><a href="#" data-route="solutions">赛事分析平台</a></li>
+                    <li><a href="#" data-route="solutions">智能场馆管理</a></li>
+                    <li><a href="#" data-route="solutions">数字营销解决方案</a></li>
+                    <li><a href="#" data-route="solutions">智能裁判辅助系统</a></li>
+                    <li><a href="#" data-route="solutions">球迷互动平台</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>关于我们</h3>
+                <ul>
+                    <li><a href="#" data-route="aboutCompany">公司简介</a></li>
+                    <li><a href="#" data-route="about">团队介绍</a></li>
+                    <li><a href="#" data-route="about">合作伙伴</a></li>
+                    <li><a href="#" data-route="about">新闻动态</a></li>
+                    <li><a href="#" data-route="about">加入我们</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>联系我们</h3>
+                <ul>
+                    <li><a href="#" data-route="contact">在线咨询</a></li>
+                    <li><a href="#" data-route="contact">意见反馈</a></li>
+                    <li><a href="#" data-route="contact">服务支持</a></li>
+                    <li><a href="#" data-route="contact">隐私政策</a></li>
+                    <li><a href="#" data-route="contact">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 体育加AI. 保留所有权利.</p>
+        </div>
+    </footer>
+</body>
+</html>

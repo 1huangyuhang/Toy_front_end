@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成功案例 - 体育加AI</title>
+    <meta name="description" content="体育加AI的成功案例展示，包括智能训练系统、赛事分析平台、智能场馆管理等解决方案的实际应用效果。">
+    <link rel="icon" type="image/x-ico" href="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20AI%20logo%20modern%20minimalist&image_size=square">
+    <style>
+        :root{--primary:#0032FF;--secondary:#00A6FF;--accent:#FF4590;--dark:#222222;--light:#ffffff;--gray:#f5f5f5;--text:#333333;--text-light:#666666}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:system-ui,-apple-system,"Segoe UI","Roboto","Ubuntu","Cantarell","Noto Sans",sans-serif;line-height:1.6;color:var(--text);background-color:var(--light)}
+        .container{max-width:1360px;margin:0 auto;padding:0 20px}
+        header{background-color:var(--light);padding:20px 0;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000}
+        .header-container{display:flex;justify-content:space-between;align-items:center}
+        .logo{font-size:24px;font-weight:700;color:var(--primary);text-decoration:none;display:flex;align-items:center}
+        .logo svg{margin-right:10px}
+        nav ul{display:flex;list-style:none}
+        nav ul li{margin-left:30px}
+        nav ul li a{text-decoration:none;color:var(--text);font-weight:500;transition:color .3s ease}
+        nav ul li a:hover{color:var(--primary)}
+        .hero{background:linear-gradient(135deg,rgba(0,50,255,.9) 0%,rgba(0,166,255,.9) 100%),url('https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20ai%20success%20cases%20background&image_size=landscape_16_9');background-size:cover;background-position:center;background-repeat:no-repeat;color:var(--light);padding:100px 0;text-align:center}
+        .hero h1{font-size:48px;font-weight:700;margin-bottom:20px}
+        .hero p{font-size:20px;margin-bottom:40px;max-width:800px;margin-left:auto;margin-right:auto}
+        .btn{display:inline-block;padding:15px 30px;background-color:var(--light);color:var(--primary);border:none;border-radius:50px;font-size:16px;font-weight:700;text-decoration:none;transition:all .3s ease}
+        .btn:hover{background-color:var(--gray);transform:translateY(-2px)}
+        .cases{padding:100px 0;background-color:var(--gray)}
+        .section-title{text-align:center;margin-bottom:60px}
+        .section-title h2{font-size:36px;font-weight:700;margin-bottom:20px;color:var(--dark)}
+        .section-title p{font-size:18px;color:var(--text-light);max-width:800px;margin:0 auto}
+        .cases-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:40px;margin-top:60px}
+        .case-card{background-color:var(--light);border-radius:10px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,.1);transition:transform .3s ease}
+        .case-card:hover{transform:translateY(-5px)}
+        .case-image{width:100%;height:250px;overflow:hidden}
+        .case-image img{width:100%;height:100%;object-fit:cover}
+        .case-content{padding:30px}
+        .case-content h3{font-size:24px;font-weight:700;margin-bottom:15px;color:var(--primary)}
+        .case-content p{margin-bottom:20px;color:var(--text-light)}
+        .case-tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+        .case-tag{padding:5px 15px;background-color:var(--gray);border-radius:20px;font-size:14px;color:var(--text-light)}
+        .case-link{display:inline-block;color:var(--primary);font-weight:500;text-decoration:none;transition:color .3s ease}
+        .case-link:hover{color:var(--secondary)}
+        .testimonial{padding:100px 0;background-color:var(--light)}
+        .testimonial-container{max-width:800px;margin:0 auto;text-align:center}
+        .testimonial-quote{font-size:24px;font-style:italic;margin-bottom:30px;color:var(--text)}
+        .testimonial-author{font-size:18px;font-weight:700;color:var(--primary)}
+        .testimonial-company{font-size:14px;color:var(--text-light)}
+        footer{background-color:var(--dark);color:var(--light);padding:60px 0}
+        .footer-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px}
+        .footer-column h3{font-size:20px;font-weight:700;margin-bottom:20px}
+        .footer-column p{margin-bottom:15px;color:#ccc}
+        .footer-column ul{list-style:none}
+        .footer-column ul li{margin-bottom:10px}
+        .footer-column ul li a{color:#ccc;text-decoration:none;transition:color .3s ease}
+        .footer-column ul li a:hover{color:var(--light)}
+        .footer-bottom{border-top:1px solid #444;margin-top:40px;padding-top:20px;text-align:center;color:#ccc}
+        @media (max-width:768px){.hero h1{font-size:36px}.hero p{font-size:18px}.section-title h2{font-size:28px}.cases-grid{grid-template-columns:1fr}.header-container{flex-direction:column;gap:20px}.nav ul{flex-wrap:wrap;justify-content:center}.nav ul li{margin:0 15px}}}
+    </style>
+    <script>
+        // 懒加载图片
+        document.addEventListener('DOMContentLoaded', function() {
+            const lazyImages = document.querySelectorAll('img[data-src]');
+            
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            const image = entry.target;
+                            image.src = image.dataset.src;
+                            image.classList.remove('lazy');
+                            imageObserver.unobserve(image);
+                        }
+                    });
+                });
+                
+                lazyImages.forEach(function(image) {
+                    imageObserver.observe(image);
+                });
+            }
+        });
+    </script>
+    <!-- 已迁移到 React 工程（sports-ai-react/）；此处旧模块引用已移除 -->
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-container">
+            <a href="#" data-route="home" class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 40C31.0457 40 40 31.0457 40 20C40 8.95431 31.0457 0 20 0C8.95431 0 0 8.95431 0 20C0 31.0457 8.95431 40 20 40Z" fill="#0032FF"/>
+                    <path d="M12 18L18 24L12 30V18Z" fill="white"/>
+                    <path d="M28 18L22 24L28 30V18Z" fill="white"/>
+                </svg>
+                体育加AI
+            </a>
+            <nav data-site-nav></nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="container">
+            <h1>成功案例</h1>
+            <p>探索体育加AI如何帮助全球体育产业实现数字化转型，提升运营效率和商业价值</p>
+            <a href="#cases" class="btn">查看案例</a>
+        </div>
+    </section>
+
+    <!-- 案例展示部分 -->
+    <section class="cases" id="cases">
+        <div class="container">
+            <div class="section-title">
+                <h2>我们的成功案例</h2>
+                <p>从专业运动队到大型体育场馆，我们的AI解决方案已经帮助众多客户实现了数字化转型</p>
+            </div>
+            <div class="cases-grid">
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20team%20training%20ai%20technology&image_size=landscape_4_3" alt="智能训练系统案例">
+                    </div>
+                    <div class="case-content">
+                        <h3>英超足球俱乐部智能训练系统</h3>
+                        <p>为某英超俱乐部提供智能训练系统，通过AI分析球员训练数据，制定个性化训练方案，显著提升了球员体能和技术水平，减少了运动损伤。</p>
+                        <div class="case-tags">
+                            <span class="case-tag">智能训练</span>
+                            <span class="case-tag">数据分析</span>
+                            <span class="case-tag">足球</span>
+                        </div>
+                        <a href="#" class="case-link">查看详情 →</a>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20stadium%20management%20ai&image_size=landscape_4_3" alt="智能场馆管理案例">
+                    </div>
+                    <div class="case-content">
+                        <h3>大型体育场馆智能管理系统</h3>
+                        <p>为某大型体育场馆部署智能管理系统，实现了票务管理、场馆资源优化配置和观众行为分析，提升了场馆运营效率和观众体验。</p>
+                        <div class="case-tags">
+                            <span class="case-tag">智能场馆</span>
+                            <span class="case-tag">运营管理</span>
+                            <span class="case-tag">观众体验</span>
+                        </div>
+                        <a href="#" class="case-link">查看详情 →</a>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20event%20analysis%20ai&image_size=landscape_4_3" alt="赛事分析平台案例">
+                    </div>
+                    <div class="case-content">
+                        <h3>NBA球队赛事分析平台</h3>
+                        <p>为某NBA球队开发赛事分析平台，通过AI技术对比赛数据进行深度分析，为教练提供战术建议，帮助球队提高比赛胜率。</p>
+                        <div class="case-tags">
+                            <span class="case-tag">赛事分析</span>
+                            <span class="case-tag">战术建议</span>
+                            <span class="case-tag">篮球</span>
+                        </div>
+                        <a href="#" class="case-link">查看详情 →</a>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20marketing%20digital%20ai&image_size=landscape_4_3" alt="数字营销解决方案案例">
+                    </div>
+                    <div class="case-content">
+                        <h3>国际体育品牌数字营销解决方案</h3>
+                        <p>为某国际体育品牌提供数字营销解决方案，通过AI分析粉丝画像，实现精准营销，提升品牌影响力和商业价值。</p>
+                        <div class="case-tags">
+                            <span class="case-tag">数字营销</span>
+                            <span class="case-tag">粉丝分析</span>
+                            <span class="case-tag">品牌推广</span>
+                        </div>
+                        <a href="#" class="case-link">查看详情 →</a>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20referee%20ai%20technology&image_size=landscape_4_3" alt="智能裁判辅助系统案例">
+                    </div>
+                    <div class="case-content">
+                        <h3>足球联赛智能裁判辅助系统</h3>
+                        <p>为某足球联赛部署智能裁判辅助系统，通过AI技术辅助裁判判罚，提高比赛公正性和准确性，减少争议判罚。</p>
+                        <div class="case-tags">
+                            <span class="case-tag">智能裁判</span>
+                            <span class="case-tag">VAR技术</span>
+                            <span class="case-tag">足球</span>
+                        </div>
+                        <a href="#" class="case-link">查看详情 →</a>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20fan%20engagement%20platform&image_size=landscape_4_3" alt="球迷互动平台案例">
+                    </div>
+                    <div class="case-content">
+                        <h3>全球体育赛事球迷互动平台</h3>
+                        <p>为某全球体育赛事开发球迷互动平台，通过AI技术提供个性化内容推荐和虚拟观赛体验，提升球迷参与度和赛事影响力。</p>
+                        <div class="case-tags">
+                            <span class="case-tag">球迷互动</span>
+                            <span class="case-tag">个性化推荐</span>
+                            <span class="case-tag">虚拟观赛</span>
+                        </div>
+                        <a href="#" class="case-link">查看详情 →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 客户 testimonial -->
+    <section class="testimonial">
+        <div class="container testimonial-container">
+            <p class="testimonial-quote">"体育加AI的智能训练系统帮助我们球队显著提升了训练效率和比赛表现，AI分析的训练数据为我们提供了宝贵的 insights，使我们能够制定更加科学的训练计划。"</p>
+            <div class="testimonial-author">约翰·史密斯</div>
+            <div class="testimonial-company">英超某俱乐部主教练</div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>体育加AI</h3>
+                <p>为全球体育产业提供智能解决方案，助力体育产业数字化转型。</p>
+                <p>邮箱：contact@sportsai.com</p>
+                <p>电话：400-123-4567</p>
+            </div>
+            <div class="footer-column">
+                <h3>解决方案</h3>
+                <ul>
+                    <li><a href="#" data-route="solutions">智能训练系统</a></li>
+                    <li><a href="#" data-route="solutions">赛事分析平台</a></li>
+                    <li><a href="#" data-route="solutions">智能场馆管理</a></li>
+                    <li><a href="#" data-route="solutions">数字营销解决方案</a></li>
+                    <li><a href="#" data-route="solutions">智能裁判辅助系统</a></li>
+                    <li><a href="#" data-route="solutions">球迷互动平台</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>关于我们</h3>
+                <ul>
+                    <li><a href="#" data-route="aboutCompany">公司简介</a></li>
+                    <li><a href="#" data-route="about">团队介绍</a></li>
+                    <li><a href="#" data-route="about">合作伙伴</a></li>
+                    <li><a href="#" data-route="about">新闻动态</a></li>
+                    <li><a href="#" data-route="about">加入我们</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>联系我们</h3>
+                <ul>
+                    <li><a href="#" data-route="contact">在线咨询</a></li>
+                    <li><a href="#" data-route="contact">意见反馈</a></li>
+                    <li><a href="#" data-route="contact">服务支持</a></li>
+                    <li><a href="#" data-route="contact">隐私政策</a></li>
+                    <li><a href="#" data-route="contact">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 体育加AI. 保留所有权利.</p>
+        </div>
+    </footer>
+</body>
+</html>

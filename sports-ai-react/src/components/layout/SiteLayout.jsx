@@ -1,12 +1,17 @@
+import { useState } from 'react'
 import SiteNav from './SiteNav.jsx'
 import SiteFooter from './SiteFooter.jsx'
 import { Link } from 'react-router-dom'
-import FooterReveal from './FooterReveal.jsx'
+import FooterReveal from '../animation/FooterReveal.jsx'
+import SmartHeader from '../animation/SmartHeader.jsx'
+import ReadingProgress from '../animation/ReadingProgress.jsx'
 
 export default function SiteLayout({ children }) {
+  const [menuExpanded, setMenuExpanded] = useState(false)
   return (
     <>
-      <header className="sticky top-0 z-[1000] bg-white py-5 shadow-[0_2px_10px_rgba(0,0,0,0.1)]">
+      <ReadingProgress />
+      <SmartHeader menuExpanded={menuExpanded}>
         <div className="container flex items-center justify-between gap-5 max-md:flex-col">
           <Link className="logo" to="/" aria-label="体育加AI 首页">
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,9 +24,9 @@ export default function SiteLayout({ children }) {
             </svg>
             <span className="text-2xl font-bold text-primary">体育加AI</span>
           </Link>
-          <SiteNav />
+          <SiteNav onExpandedChange={setMenuExpanded} />
         </div>
-      </header>
+      </SmartHeader>
 
       <main>{children}</main>
       <FooterReveal>

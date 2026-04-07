@@ -18,3 +18,11 @@ pnpm-debug.log*
 # Editor
 .vscode/
 
+# Cursor
+.cursor/
+sports-ai-react/.cursor/
+
+# Reference HTML exports (do not commit)
+*Style3D*.html
+*Style3D*_files/
+

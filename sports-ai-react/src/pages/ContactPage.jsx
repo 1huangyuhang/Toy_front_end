@@ -1,4 +1,4 @@
-import SiteLayout from '../components/SiteLayout.jsx'
+import SiteLayout from '../components/layout/SiteLayout.jsx'
 
 export default function ContactPage() {
   function onSubmit(e) {

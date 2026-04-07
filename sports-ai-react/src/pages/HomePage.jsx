@@ -1,5 +1,5 @@
-import SiteLayout from '../components/SiteLayout.jsx'
-import VideoSection from '../components/VideoSection.jsx'
+import SiteLayout from '../components/layout/SiteLayout.jsx'
+import VideoSection from '../components/media/VideoSection.jsx'
 
 export default function HomePage() {
   return (

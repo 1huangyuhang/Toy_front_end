@@ -134,13 +134,6 @@ function authFromRequest(req) {
   }
 }
 
-function requireAuth(req, res, next) {
-  const user = authFromRequest(req)
-  if (!user) return res.status(401).json({ error: 'unauthorized' })
-  req.user = user
-  next()
-}
-
 app.post('/api/auth/register', async (req, res) => {
   try {
     const { email, password } = req.body || {}

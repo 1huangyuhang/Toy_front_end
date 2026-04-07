@@ -14,6 +14,380 @@ body {
   font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Ubuntu", "Cantarell", "Noto Sans", sans-serif;
 }
 
+/* Theme tokens (可全局统一调整) */
+:root {
+  /* 顶部液态玻璃导航（偏透明 + 高光折射） */
+  --nav-glass-tint: rgba(255, 255, 255, 0.18);
+  --nav-glass-blur: 26px;
+  --nav-glass-sat: 190%;
+  --nav-glass-shadow: 0 10px 40px rgba(15, 23, 42, 0.10);
+  --nav-glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.55), inset 0 -1px 0 rgba(15, 23, 42, 0.06);
+  --nav-glass-border: rgba(255, 255, 255, 0.35);
+  --nav-glass-border-2: rgba(15, 23, 42, 0.08);
+  --nav-glass-highlight: rgba(255, 255, 255, 0.62);
+  --nav-glass-glow: rgba(0, 166, 255, 0.20);
+
+  /* Smart header sizing */
+  --nav-pad-y-expanded: 18px;
+  --nav-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Scroll progress bar */
+  --progress-h: 3px;
+  --progress-bg: rgba(15, 23, 42, 0.10);
+  --progress-glow: rgba(0, 166, 255, 0.45);
+  --progress-grad-a: #0032ff;
+  --progress-grad-b: #00a6ff;
+}
+
+/* Frosted glass utility (局部使用：只给需要毛玻璃的容器加 class) */
+.glass-nav {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
+
+  isolation: isolate;
+  overflow: clip;
+
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.10)),
+    radial-gradient(1200px 120px at 20% 0%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(900px 180px at 80% 0%, var(--nav-glass-glow), rgba(0, 166, 255, 0) 70%),
+    var(--nav-glass-tint);
+
+  border-top: 1px solid var(--nav-glass-border);
+  border-bottom: 1px solid var(--nav-glass-border-2);
+  box-shadow: var(--nav-glass-shadow), var(--nav-glass-inset);
+
+  -webkit-backdrop-filter: saturate(var(--nav-glass-sat)) blur(var(--nav-glass-blur));
+  backdrop-filter: saturate(var(--nav-glass-sat)) blur(var(--nav-glass-blur));
+}
+
+/* Scroll-responsive header (折叠/展开) */
+.smart-header {
+  padding: 0;
+  height: var(--sh-h, auto);
+  transition:
+    height 240ms var(--nav-ease),
+    box-shadow 220ms var(--nav-ease),
+    background 220ms var(--nav-ease),
+    -webkit-backdrop-filter 220ms var(--nav-ease),
+    backdrop-filter 220ms var(--nav-ease);
+  will-change: height;
+  overflow: hidden;
+}
+
+.smart-header.is-collapsed {
+  height: var(--progress-h);
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: transparent;
+}
+
+.smart-header__top {
+  position: relative;
+  z-index: 3;
+}
+
+.smart-header__content {
+  padding: var(--nav-pad-y-expanded) 0;
+  transition: transform 240ms var(--nav-ease);
+  will-change: transform;
+  position: relative;
+  z-index: 1;
+}
+
+.smart-header.is-collapsed .smart-header__content {
+  transform: translate3d(0, -110%, 0);
+}
+
+/* Reading progress line (fixed at page top, can be covered by menu) */
+.reading-progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: var(--progress-h);
+  background: var(--progress-bg);
+  pointer-events: none;
+  z-index: 900; /* below header (1000), so menu can cover it */
+  opacity: 1;
+}
+
+.reading-progress__bar {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  transform-origin: 0 50%;
+  transform: scaleX(var(--rpv, var(--rp, 0)));
+  background: linear-gradient(90deg, var(--progress-grad-a), var(--progress-grad-b));
+  background-size: 220% 100%;
+  animation: reading-progress-flow 1.15s linear infinite;
+  transition: transform 80ms linear;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 10px 30px var(--progress-glow);
+  will-change: transform, background-position;
+}
+
+.reading-progress__bar::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: var(--rp-head, var(--rp-pct, 0%));
+  width: calc(var(--progress-h) * 6);
+  height: calc(var(--progress-h) * 6);
+  transform: translate(var(--rp-head-shift, -50%), -50%);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 55%),
+    radial-gradient(circle at 50% 50%, var(--progress-grad-b), rgba(0, 166, 255, 0) 70%);
+  filter: blur(0.2px);
+  box-shadow: 0 10px 30px var(--progress-glow);
+  opacity: 0.85;
+}
+
+@keyframes reading-progress-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 120% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reading-progress__bar {
+    box-shadow: none;
+    animation: none;
+  }
+  .reading-progress__bar::after {
+    box-shadow: none;
+    opacity: 0.55;
+  }
+}
+
+/* Mega nav (Style3D-like) */
+.nav-root {
+  position: relative;
+}
+
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 18px 26px;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #0f172a;
+  text-decoration: none;
+  transition: color 180ms ease, opacity 180ms ease;
+  background: transparent;
+  border: 0;
+  padding: 10px 8px;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  color: #0032ff;
+}
+
+.nav-link.is-active {
+  color: #0032ff;
+}
+
+.nav-strong {
+  font-weight: 800;
+}
+
+.nav-caret {
+  font-size: 12px;
+  opacity: 0.75;
+  transform: translateY(-1px);
+}
+
+.nav-item.is-open .nav-caret {
+  transform: translateY(-1px) rotate(180deg);
+}
+
+.nav-mega {
+  /* Fullscreen overlay (Style3D-like) */
+  position: fixed;
+  inset: 0;
+  /* Keep below header so the top nav stays visible */
+  z-index: 900;
+}
+
+.nav-mega-scrim {
+  /* Only cover content area below the header */
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--sh-h, 72px);
+  bottom: 0;
+  border: 0;
+  /* neutral glass veil (avoid tinting underlying hero colors) */
+  background:
+    radial-gradient(900px 520px at 20% 10%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 56%),
+    radial-gradient(1000px 620px at 80% 20%, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0) 62%),
+    rgba(0, 0, 0, 0.46);
+  -webkit-backdrop-filter: blur(26px) saturate(105%) brightness(0.92);
+  backdrop-filter: blur(26px) saturate(105%) brightness(0.92);
+}
+
+.nav-mega-inner {
+  position: relative;
+  z-index: 2;
+  margin: 0 auto;
+  /* Match Style3D: content sits on blurred backdrop (not a “card panel”) */
+  width: min(94vw, 1240px);
+  padding: 0;
+  border-radius: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 78px;
+  animation: nav-mega-in 180ms var(--nav-ease) both;
+  margin-top: calc(var(--sh-h, 72px) + 44px);
+}
+
+.nav-mega-title {
+  font-size: 34px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.02em;
+}
+
+.nav-mega-subtitle {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.nav-mega-aside {
+  padding: 0;
+}
+
+.nav-mega-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px 36px;
+  align-content: start;
+}
+
+.nav-mega-col-title {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+  margin-bottom: 10px;
+}
+
+.nav-mega-links {
+  display: grid;
+  gap: 12px;
+}
+
+.nav-mega-link {
+  display: grid;
+  gap: 4px;
+  padding: 8px 0;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.86);
+  background: transparent;
+  border: 0;
+  transition: transform 180ms var(--nav-ease), color 180ms var(--nav-ease), opacity 180ms var(--nav-ease);
+}
+
+.nav-mega-link:hover {
+  transform: translateY(-1px);
+  color: #ffffff;
+}
+
+.nav-mega-link-label {
+  font-weight: 650;
+}
+
+.nav-mega-link-desc {
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+@keyframes nav-mega-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -6px, 0) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@media (max-width: 820px) {
+  .nav-mega {
+    display: none;
+  }
+}
+
+/* 顶部高光与折射“液态波纹”（不影响交互） */
+.glass-nav::before,
+.glass-nav::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glass-nav::before {
+  background:
+    linear-gradient(180deg, var(--nav-glass-highlight), rgba(255, 255, 255, 0) 55%),
+    radial-gradient(700px 120px at 50% 0%, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0) 70%);
+  opacity: 0.75;
+  mix-blend-mode: screen;
+}
+
+.glass-nav::after {
+  background:
+    radial-gradient(520px 220px at 18% 10%, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0) 65%),
+    radial-gradient(460px 240px at 82% 30%, rgba(0, 166, 255, 0.18), rgba(0, 166, 255, 0) 70%),
+    radial-gradient(380px 200px at 55% 0%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 70%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, rgba(255, 255, 255, 0) 1px 3px),
+    repeating-linear-gradient(90deg, rgba(15, 23, 42, 0.018) 0 1px, rgba(15, 23, 42, 0) 1px 4px);
+  filter: blur(1.75px);
+  opacity: 0.92;
+  mix-blend-mode: overlay;
+}
+
+.glass-nav > * {
+  position: relative;
+  z-index: 1;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-nav {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.92));
+  }
+}
+
 /* minimal reset for native elements */
 ul {
   list-style: none;
@@ -32,12 +406,12 @@ textarea {
   font: inherit;
 }
 
-/* footer reveal: 仅作轻量视觉增强（不依赖 tailwind） */
+/* footer reveal */
 .footer-reveal {
   filter: drop-shadow(0 -14px 40px rgba(0, 0, 0, 0.18));
 }
 
-/* 全局复用（不依赖 @apply，避免 Tailwind v4 的 @apply/@reference 限制） */
+/* Global utilities */
 .container {
   max-width: 1360px;
   margin: 0 auto;

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { setupFooterReveal } from '../animations/footerReveal.js'
+import { setupFooterReveal } from '../../animations/footerReveal.js'
 
 export default function FooterReveal({ children }) {
   const footerRef = useRef(null)

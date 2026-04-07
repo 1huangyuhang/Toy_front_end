@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import SiteLayout from '../components/SiteLayout.jsx'
+import SiteLayout from '../components/layout/SiteLayout.jsx'
 import { useAuth } from '../auth/AuthContext.jsx'
 
-export default function LoginPage() {
-  const { login } = useAuth()
+export default function RegisterPage() {
+  const { register } = useAuth()
   const nav = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -16,10 +16,10 @@ export default function LoginPage() {
     setBusy(true)
     setError('')
     try {
-      await login({ email, password })
+      await register({ email, password })
       nav('/')
     } catch (e2) {
-      setError(e2?.message || '登录失败')
+      setError(e2?.message || '注册失败')
     } finally {
       setBusy(false)
     }
@@ -30,24 +30,24 @@ export default function LoginPage() {
       <section className="py-[90px] pb-[110px] bg-gradient-to-b from-blue-600/10 to-sky-500/5" data-animate="fade-up">
         <div className="container">
           <div className="mx-auto max-w-[520px] rounded-2xl bg-white p-8 shadow-card">
-            <h1 className="mb-1 text-[28px] font-bold text-dark">登录</h1>
-            <p className="mb-5 text-text-light">登录后可绑定用户并上传素材。</p>
+            <h1 className="mb-1 text-[28px] font-bold text-dark">注册</h1>
+            <p className="mb-5 text-text-light">创建账号后即可绑定用户并上传素材。</p>
             <form onSubmit={onSubmit} className="grid gap-4">
               <label className="grid gap-2">
                 <span className="text-sm font-semibold text-text-light">邮箱</span>
                 <input className="w-full rounded-xl border border-zinc-200 px-4 py-3 text-sm" value={email} onChange={(e) => setEmail(e.target.value)} type="email" required />
               </label>
               <label className="grid gap-2">
-                <span className="text-sm font-semibold text-text-light">密码</span>
-                <input className="w-full rounded-xl border border-zinc-200 px-4 py-3 text-sm" value={password} onChange={(e) => setPassword(e.target.value)} type="password" required />
+                <span className="text-sm font-semibold text-text-light">密码（至少 6 位）</span>
+                <input className="w-full rounded-xl border border-zinc-200 px-4 py-3 text-sm" value={password} onChange={(e) => setPassword(e.target.value)} type="password" required minLength={6} />
               </label>
               <button className="btn btn-primary w-full" type="submit" disabled={busy}>
-                {busy ? '登录中…' : '登录'}
+                {busy ? '注册中…' : '注册'}
               </button>
               {error ? <div className="rounded-xl bg-accent/10 px-3 py-2 text-[13px] text-[#a3124d]">{error}</div> : null}
             </form>
             <div className="mt-4 text-text-light">
-              还没有账号？<Link to="/register">去注册</Link>
+              已有账号？<Link to="/login">去登录</Link>
             </div>
           </div>
         </div>

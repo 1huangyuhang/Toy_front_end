@@ -226,9 +226,15 @@ export default function SiteNav({ onExpandedChange }) {
       {/* Mega menu is portaled to body to avoid being clipped by header overflow/filters */}
       {activeMenu?.panel
         ? createPortal(
-            <div className="nav-mega" role="dialog" aria-label={`${activeMenu.label} 菜单`} onMouseEnter={clearCloseTimer}>
+            <div
+              className="nav-mega"
+              role="dialog"
+              aria-label={`${activeMenu.label} 菜单`}
+              onMouseEnter={clearCloseTimer}
+              onMouseLeave={scheduleClose}
+            >
               <button type="button" className="nav-mega-scrim" aria-label="关闭菜单" onClick={close} />
-              <div className="nav-mega-inner" role="document">
+              <div className="nav-mega-inner" role="document" onMouseEnter={clearCloseTimer} onMouseLeave={scheduleClose}>
                 <aside className="nav-mega-aside">
                   <div className="nav-mega-title">{activeMenu.panel.title}</div>
                   {activeMenu.panel.subtitle ? <div className="nav-mega-subtitle">{activeMenu.panel.subtitle}</div> : null}

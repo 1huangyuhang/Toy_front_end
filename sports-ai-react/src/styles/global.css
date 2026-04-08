@@ -6,6 +6,18 @@ body {
   height: 100%;
 }
 
+/* Hide ALL native scrollbars (still scrollable) */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge legacy */
+}
+
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none; /* Chrome/Safari */
+}
+
 body {
   background: #fff;
   color: #333;
@@ -113,28 +125,35 @@ body {
   pointer-events: none;
   z-index: 900; /* below header (1000), so menu can cover it */
   opacity: 1;
+  overflow: hidden;
 }
 
 .reading-progress__bar {
   position: absolute;
-  inset: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
   height: 100%;
-  width: 100%;
-  transform-origin: 0 50%;
-  transform: scaleX(var(--rpv, var(--rp, 0)));
+  /* Use width instead of scaleX to avoid sub-pixel gaps at the right edge. */
+  width: clamp(0%, var(--rp-pct, 0%), 100%);
   background: linear-gradient(90deg, var(--progress-grad-a), var(--progress-grad-b));
   background-size: 220% 100%;
   animation: reading-progress-flow 1.15s linear infinite;
-  transition: transform 80ms linear;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 10px 30px var(--progress-glow);
-  will-change: transform, background-position;
+  /* Important: when width is ~0, some browsers still paint shadow/glow -> "ghost halo".
+     We toggle the shadow via CSS var from JS to guarantee no residual glow. */
+  box-shadow: var(
+    --rp-bar-shadow,
+    0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 10px 30px var(--progress-glow)
+  );
+  will-change: width, background-position;
 }
 
 .reading-progress__bar::after {
   content: "";
   position: absolute;
   top: 50%;
-  left: var(--rp-head, var(--rp-pct, 0%));
+  left: 100%;
   width: calc(var(--progress-h) * 6);
   height: calc(var(--progress-h) * 6);
   transform: translate(var(--rp-head-shift, -50%), -50%);
@@ -143,8 +162,8 @@ body {
     radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 55%),
     radial-gradient(circle at 50% 50%, var(--progress-grad-b), rgba(0, 166, 255, 0) 70%);
   filter: blur(0.2px);
-  box-shadow: 0 10px 30px var(--progress-glow);
-  opacity: 0.85;
+  box-shadow: var(--rp-head-shadow, 0 10px 30px var(--progress-glow));
+  opacity: var(--rp-head-opacity, 0.85);
 }
 
 @keyframes reading-progress-flow {
@@ -158,12 +177,12 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .reading-progress__bar {
-    box-shadow: none;
+    box-shadow: var(--rp-bar-shadow, none);
     animation: none;
   }
   .reading-progress__bar::after {
-    box-shadow: none;
-    opacity: 0.55;
+    box-shadow: var(--rp-head-shadow, none);
+    opacity: var(--rp-head-opacity, 0.55);
   }
 }
 
@@ -236,40 +255,49 @@ body {
   top: var(--sh-h, 72px);
   bottom: 0;
   border: 0;
-  /* neutral glass veil (avoid tinting underlying hero colors) */
+  cursor: pointer;
   background:
-    radial-gradient(900px 520px at 20% 10%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 56%),
-    radial-gradient(1000px 620px at 80% 20%, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0) 62%),
-    rgba(0, 0, 0, 0.46);
-  -webkit-backdrop-filter: blur(26px) saturate(105%) brightness(0.92);
-  backdrop-filter: blur(26px) saturate(105%) brightness(0.92);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.38)),
+    radial-gradient(1200px 280px at 50% 0%, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0) 58%),
+    radial-gradient(900px 420px at 20% 0%, var(--nav-glass-glow), rgba(0, 166, 255, 0) 72%),
+    rgba(248, 250, 252, 0.42);
+  -webkit-backdrop-filter: saturate(var(--nav-glass-sat)) blur(var(--nav-glass-blur));
+  backdrop-filter: saturate(var(--nav-glass-sat)) blur(var(--nav-glass-blur));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
 .nav-mega-inner {
   position: relative;
   z-index: 2;
   margin: 0 auto;
-  /* Match Style3D: content sits on blurred backdrop (not a “card panel”) */
   width: min(94vw, 1240px);
-  padding: 0;
-  border-radius: 0;
-  overflow: visible;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
+  max-height: min(72vh, 640px);
+  margin-top: calc(var(--sh-h, 72px) + 28px);
+  padding: 36px 36px 32px;
+  border-radius: 0 0 18px 18px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.62)),
+    radial-gradient(900px 160px at 30% 0%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 65%),
+    var(--nav-glass-tint);
+  border: 1px solid var(--nav-glass-border-2);
+  border-top: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: var(--nav-glass-shadow), var(--nav-glass-inset);
+  -webkit-backdrop-filter: saturate(var(--nav-glass-sat)) blur(calc(var(--nav-glass-blur) * 0.85));
+  backdrop-filter: saturate(var(--nav-glass-sat)) blur(calc(var(--nav-glass-blur) * 0.85));
   display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 78px;
+  grid-template-columns: minmax(0, 300px) 1fr;
+  gap: 40px 56px;
+  align-content: start;
   animation: nav-mega-in 180ms var(--nav-ease) both;
-  margin-top: calc(var(--sh-h, 72px) + 44px);
 }
 
 .nav-mega-title {
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.92);
+  color: #0f172a;
   letter-spacing: 0.02em;
 }
 
@@ -277,25 +305,26 @@ body {
   margin-top: 12px;
   font-size: 14px;
   line-height: 1.75;
-  color: rgba(255, 255, 255, 0.62);
+  color: rgba(15, 23, 42, 0.62);
 }
 
 .nav-mega-aside {
-  padding: 0;
+  padding: 8px 0 0;
 }
 
 .nav-mega-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px 36px;
+  gap: 18px 28px;
   align-content: start;
+  padding-top: 6px;
 }
 
 .nav-mega-col-title {
   font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.62);
+  color: rgba(15, 23, 42, 0.48);
   margin-bottom: 10px;
 }
 
@@ -309,7 +338,7 @@ body {
   gap: 4px;
   padding: 8px 0;
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.86);
+  color: #0f172a;
   background: transparent;
   border: 0;
   transition: transform 180ms var(--nav-ease), color 180ms var(--nav-ease), opacity 180ms var(--nav-ease);
@@ -317,7 +346,7 @@ body {
 
 .nav-mega-link:hover {
   transform: translateY(-1px);
-  color: #ffffff;
+  color: #0032ff;
 }
 
 .nav-mega-link-label {
@@ -327,7 +356,7 @@ body {
 .nav-mega-link-desc {
   font-size: 12px;
   line-height: 1.55;
-  color: rgba(255, 255, 255, 0.62);
+  color: rgba(15, 23, 42, 0.52);
 }
 
 @keyframes nav-mega-in {

@@ -5,33 +5,55 @@ function clamp01(n) {
   return Math.max(0, Math.min(1, n))
 }
 
-function getScroller() {
-  const candidates = [document.scrollingElement, document.documentElement, document.body].filter(Boolean)
-  for (const el of candidates) {
-    const maxScroll = (el.scrollHeight || 0) - (el.clientHeight || 0)
-    if (maxScroll > 2) return el
-  }
-  return document.documentElement
+function isRootScrollSurface(el) {
+  if (!el || el === document) return true
+  const se = document.scrollingElement
+  return el === document.documentElement || el === document.body || (se && el === se)
 }
 
-function getProgress(scroller) {
-  const el = scroller || getScroller()
+/**
+ * 主文档滚动进度（桌面/移动端视口滚动）。
+ * 用 window + 文档最大高度，避免 html/body height:100% 时选错 scrollingElement 导致进度卡住。
+ */
+function getViewportDocumentProgress() {
+  const y =
+    window.scrollY ??
+    window.pageYOffset ??
+    document.documentElement?.scrollTop ??
+    document.body?.scrollTop ??
+    0
 
-  const scrollTop = Math.max(
-    el.scrollTop || 0,
-    window.scrollY || 0,
-    window.pageYOffset || 0,
-    document.documentElement.scrollTop || 0,
-    document.body.scrollTop || 0,
+  const h = Math.max(
+    document.documentElement?.scrollHeight ?? 0,
+    document.body?.scrollHeight ?? 0,
+    document.documentElement?.offsetHeight ?? 0,
+    document.body?.offsetHeight ?? 0,
+    document.documentElement?.clientHeight ?? 0,
+    document.body?.clientHeight ?? 0,
   )
 
-  const scrollHeight = Math.max(el.scrollHeight || 0, document.documentElement.scrollHeight || 0, document.body.scrollHeight || 0)
-  const clientHeight = Math.max(el.clientHeight || 0, window.innerHeight || 0)
+  const vh = window.innerHeight || 0
+  const maxScroll = Math.max(0, h - vh)
+  if (maxScroll <= 1) return 0
 
-  const maxScroll = Math.max(1, scrollHeight - clientHeight)
-  const EPS_PX = 3
-  if (scrollTop >= maxScroll - EPS_PX) return 1
-  return clamp01(scrollTop / maxScroll)
+  const EPS_PX = 2
+  if (y >= maxScroll - EPS_PX) return 1
+  return clamp01(y / maxScroll)
+}
+
+function getNestedScrollProgress(el) {
+  const st = el.scrollTop || 0
+  const maxScroll = Math.max(1, (el.scrollHeight || 0) - (el.clientHeight || 0))
+  const EPS_PX = 2
+  if (st >= maxScroll - EPS_PX) return 1
+  return clamp01(st / maxScroll)
+}
+
+function getProgress(nestedScroller) {
+  if (nestedScroller && !isRootScrollSurface(nestedScroller)) {
+    return getNestedScrollProgress(nestedScroller)
+  }
+  return getViewportDocumentProgress()
 }
 
 /**
@@ -42,87 +64,89 @@ function getProgress(scroller) {
 export default function ReadingProgress() {
   const rootRef = useRef(null)
   const rafRef = useRef(0)
-  const scrollerRef = useRef(null)
-  const intervalRef = useRef(0)
+  /** null = 主文档视口滚动；非 null = 内部 overflow 容器 */
+  const nestedScrollerRef = useRef(null)
 
   useEffect(() => {
     const el = rootRef.current
     if (!el) return
 
     let lastP = -1
-    scrollerRef.current = getScroller()
+    let lastHeadVisible = null
+    let lastBarVisible = null
+
+    function applyProgress(p) {
+      el.style.setProperty('--rp', String(p))
+      el.style.setProperty('--rpv', String(p))
+
+      const pct = `${(p * 100).toFixed(3)}%`
+      el.style.setProperty('--rp-pct', pct)
+      // Head dot should not overflow at 100%.
+      el.style.setProperty('--rp-head-shift', p >= 0.999 ? '-100%' : '-50%')
+
+      // Aggressively remove glow when near 0 to eliminate occasional "ghost halo"
+      // caused by box-shadow / blur painting even when width is ~0.
+      const barVisible = p > 0.0005
+      const headVisible = p > 0.003 && p < 0.9995
+
+      el.style.setProperty('--rp-head-opacity', headVisible ? '0.85' : '0')
+      el.style.setProperty(
+        '--rp-bar-shadow',
+        barVisible ? '0 0 0 1px rgba(255, 255, 255, 0.18), 0 10px 30px var(--progress-glow)' : 'none',
+      )
+      el.style.setProperty('--rp-head-shadow', headVisible ? '0 10px 30px var(--progress-glow)' : 'none')
+
+      lastBarVisible = barVisible
+      lastHeadVisible = headVisible
+    }
 
     function schedule() {
       if (rafRef.current) return
       rafRef.current = requestAnimationFrame(() => {
         rafRef.current = 0
-        const p = getProgress(scrollerRef.current)
-        // Keep it responsive: only skip extremely tiny diffs
-        if (Math.abs(p - lastP) < 0.0001) return
+        const p = getProgress(nestedScrollerRef.current)
+        const barVisible = p > 0.0005
+        const headVisible = p > 0.003 && p < 0.9995
+        // Skip only when both value and visibility states are stable.
+        if (Math.abs(p - lastP) < 1e-5 && barVisible === lastBarVisible && headVisible === lastHeadVisible) return
         lastP = p
-        el.style.setProperty('--rp', String(p))
-        // At top, should be truly 0 (no pre-filled segment).
-        el.style.setProperty('--rpv', String(p))
-        const pct = `${(p * 100).toFixed(3)}%`
-        el.style.setProperty('--rp-pct', pct)
-        // Head dot should not overflow at 100%.
-        el.style.setProperty('--rp-head', pct)
-        el.style.setProperty('--rp-head-shift', p >= 0.999 ? '-100%' : '-50%')
+        applyProgress(p)
       })
     }
 
     function onAnyScroll(e) {
-      // Capture the actual scroll container if the page scroll is inside an element
-      // (e.g. a wrapper with overflow: auto).
       const target = e?.target
-      if (target && target !== document && target !== window && target !== document.documentElement) {
-        const t = target
-        const maxScroll = (t.scrollHeight || 0) - (t.clientHeight || 0)
-        if (maxScroll > 2) scrollerRef.current = t
+      if (isRootScrollSurface(target)) {
+        nestedScrollerRef.current = null
+      } else if (target && target instanceof Element) {
+        const maxScroll = (target.scrollHeight || 0) - (target.clientHeight || 0)
+        if (maxScroll > 2) nestedScrollerRef.current = target
       }
       schedule()
-    }
-
-    function ensureInterval() {
-      if (intervalRef.current) return
-      // Poll briefly to catch engines that don't emit reliable scroll events
-      // (or when scrollTop changes without a scroll event).
-      intervalRef.current = window.setInterval(schedule, 80)
-      window.setTimeout(() => {
-        if (!intervalRef.current) return
-        window.clearInterval(intervalRef.current)
-        intervalRef.current = 0
-      }, 2500)
     }
 
     schedule()
     window.addEventListener('scroll', onAnyScroll, { passive: true })
     document.addEventListener('scroll', onAnyScroll, { passive: true, capture: true })
-    scrollerRef.current?.addEventListener?.('scroll', onAnyScroll, { passive: true })
-    window.addEventListener('wheel', ensureInterval, { passive: true })
-    window.addEventListener('touchmove', ensureInterval, { passive: true })
     window.addEventListener('resize', schedule, { passive: true })
     window.addEventListener('load', schedule, { passive: true })
+    document.addEventListener('scrollend', onAnyScroll, { passive: true, capture: true })
 
     let ro
     if ('ResizeObserver' in window) {
       ro = new ResizeObserver(() => schedule())
       ro.observe(document.documentElement)
+      const root = document.getElementById('root')
+      if (root) ro.observe(root)
     }
 
     return () => {
       window.removeEventListener('scroll', onAnyScroll)
       document.removeEventListener('scroll', onAnyScroll, { capture: true })
-      scrollerRef.current?.removeEventListener?.('scroll', onAnyScroll)
-      window.removeEventListener('wheel', ensureInterval)
-      window.removeEventListener('touchmove', ensureInterval)
+      document.removeEventListener('scrollend', onAnyScroll, { capture: true })
       window.removeEventListener('resize', schedule)
       window.removeEventListener('load', schedule)
       if (ro) ro.disconnect()
-      if (intervalRef.current) {
-        window.clearInterval(intervalRef.current)
-        intervalRef.current = 0
-      }
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
     }
   }, [])
@@ -132,7 +156,15 @@ export default function ReadingProgress() {
       ref={rootRef}
       className="reading-progress"
       aria-hidden="true"
-      style={{ '--rp': '0', '--rpv': '0', '--rp-pct': '0%', '--rp-head': '0%', '--rp-head-shift': '-50%' }}
+      style={{
+        '--rp': '0',
+        '--rpv': '0',
+        '--rp-pct': '0%',
+        '--rp-head-shift': '-50%',
+        '--rp-head-opacity': '0',
+        '--rp-bar-shadow': 'none',
+        '--rp-head-shadow': 'none',
+      }}
     >
       <div className="reading-progress__bar" />
     </div>
